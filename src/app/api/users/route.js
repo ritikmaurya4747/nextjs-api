@@ -5,7 +5,9 @@ import { NextResponse } from "next/server";
 
 // ------------------------------------------------------------------
 import {user} from '@/util/db'
-export function GET(request){
+export function GET(req,content){
+    console.log(content);
+    
     const data = user;
     return NextResponse.json(data, {status:200});
 }
