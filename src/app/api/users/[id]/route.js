@@ -11,13 +11,27 @@ export function GET(req, content) {
   );
 }
 
-export async function PUT(req, res){
+export async function PUT(req, res) {
   let payload = await req.json();
-  payload.id=res.params.id;
+  payload.id = res.params.id;
   console.log(payload);
-  if(!payload.id || !payload.name || !payload.age || !payload.email){
-    return NextResponse.json({message:"all fields are required to update",success:false},{status:401});
-  } 
-  return NextResponse.json({message:payload,success:true},{status:200});
-  
+  if (!payload.id || !payload.name || !payload.age || !payload.email) {
+    return NextResponse.json(
+      { message: "all fields are required to update", success: false },
+      { status: 401 }
+    );
+  }
+  return NextResponse.json(
+    { message: payload, success: true },
+    { status: 200 }
+  );
+}
+
+export function DELETE(req,res){
+  let id = res.params.id;
+  if(id){
+    return NextResponse.json({message:"User deleted successfully",success:true},{status:200});
+  }else{
+    return NextResponse.json({message:"User not found",success:false},{status:404});
+  }
 }
