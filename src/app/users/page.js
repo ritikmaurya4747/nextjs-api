@@ -16,7 +16,7 @@ export default async function Page() {
         <div className="user-list">
           <span><Link href={`/users/${user.id}`}>Name: {user.name}</Link></span>
           <span><Link href={`/users/${user.id}/update`}>Edit</Link></span>
-          <DeleteUser/>
+          <DeleteUser id={user.id}/>
         </div>
       ))}
     </div>
