@@ -7,6 +7,7 @@ export default function Home() {
     <div className={styles.page}>
       <h1>API Routes Home </h1>
       <Link href={"/addproduct"}>Add Products</Link>
+      <Link href={"product"}>Mobile Products List</Link>
     </div>
   );
 }
