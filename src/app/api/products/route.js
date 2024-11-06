@@ -1,17 +1,32 @@
-import { connectionSrt } from "@/lib/db";
+import { dbConnect } from "@/lib/db";
 import { Product } from "@/lib/model/product";
-import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-    let data = []
+  await dbConnect();
   try {
-    await mongoose.connect(connectionSrt);
     const data = await Product.find();
-    console.log(data);
+    return NextResponse.json({ message: data, success: true });
   } catch (error) {
-    console.error(error);
-    return NextResponse.status(500).json({ message: "Server Error" });
+    console.error("Error fetching data:", error);
+    return NextResponse.json({ message: "Server Error", success: false }, { status: 500 });
   }
-  return NextResponse.json({ message: data });
+}
+
+export async function POST() {
+  await dbConnect();
+  try {
+    const product = new Product({
+      name: "Redmi 10",
+      price: 30000,
+      color: "red",
+      company: "Samsung",
+      category: "mobile",
+    });
+    const result = await product.save();
+    return NextResponse.json({ result, success: true });
+  } catch (error) {
+    console.error("Error saving product:", error);
+    return NextResponse.json({ message: "Server Error", success: false }, { status: 500 });
+  }
 }

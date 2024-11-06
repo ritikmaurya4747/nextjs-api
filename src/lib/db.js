@@ -1,2 +1,11 @@
-const {password} = process.env;
-export const connectionSrt = "mongodb+srv://nextjs:"+password+"@nextjs.3wwdb.mongodb.net/?retryWrites=true&w=majority&appName=nextjs"
+import mongoose from "mongoose";
+
+export async function dbConnect() {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("MongoDB connected");
+  } catch (error) {
+    console.error("MongoDB connection error:", error);
+    throw new Error("MongoDB connection failed");
+  }
+}
