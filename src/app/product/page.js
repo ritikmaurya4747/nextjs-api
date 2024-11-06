@@ -24,6 +24,7 @@ export default async function Page() {
             <td>Company</td>
             <td>Category</td>
             <td>Update</td>
+            <td>Delete</td>
           </tr>
         </thead>
         <tbody>
@@ -36,6 +37,9 @@ export default async function Page() {
               <td>{product.category}</td>
               <td>
                 <Link href={"product/" + product._id}>Edit</Link>
+              </td>
+              <td>
+                <Link href={''}>Delete</Link>
               </td>
             </tr>
           ))}

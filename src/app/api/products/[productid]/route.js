@@ -19,3 +19,12 @@ export async function GET(req,res){
     const result = await Product.findById(record);
     return NextResponse.json({result,success: true})
 }
+
+export async function DELETE(req,res){
+    const productId = res.params.productid
+    const record = {_id:productId}
+    await dbConnect();
+    const result = await Product.deleteOne(record);
+    return NextResponse.json({result, success: true})
+
+}
