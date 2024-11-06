@@ -13,16 +13,11 @@ export async function GET() {
   }
 }
 
-export async function POST() {
+export async function POST(req) {
   await dbConnect();
   try {
-    const product = new Product({
-      name: "Redmi 10",
-      price: 30000,
-      color: "red",
-      company: "Samsung",
-      category: "mobile",
-    });
+    const payload = await req.json();
+    const product = new Product(payload);
     const result = await product.save();
     return NextResponse.json({ result, success: true });
   } catch (error) {
