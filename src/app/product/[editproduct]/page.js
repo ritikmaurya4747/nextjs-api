@@ -1,9 +1,11 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { use } from "react";
 
 export default function Page(props) {
+  const router = useRouter();
   const params = use(props.params);
   const productId = params.editproduct;
   const [name, setName] = useState("");
@@ -22,7 +24,7 @@ export default function Page(props) {
         `http://localhost:3000/api/products/${productId}`
       );
       productData = await productData.json();
-      console.log(productData);
+      // console.log(productData);
 
       if (productData.success) {
         let message = productData.result;
@@ -40,6 +42,22 @@ export default function Page(props) {
     }
   };
 
+  const updateProduct = async () => {
+    let data = await fetch(
+      `http://localhost:3000/api/products/${productId}`,
+      {
+        method: "PUT",
+        body: JSON.stringify({ name, price, color, company, category }),
+      }
+    );
+    data = await data.json();
+    if (data.success) {
+      router.push("/product");
+      alert("Product updated successfully");
+    } else {
+      alert("Failed to update product");
+    }
+  };
   return (
     <div className="input">
       <h1>Update Products</h1>
@@ -78,7 +96,9 @@ export default function Page(props) {
         value={category}
         className="input-field"
       />
-      <button className="btn">Update</button>
+      <button onClick={updateProduct} className="btn">
+        Update
+      </button>
       <Link href={"/product"}>Go to product List </Link>
     </div>
   );
